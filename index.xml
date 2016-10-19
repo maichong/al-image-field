@@ -1,2 +1,12 @@
 <view class="al-image-field">
+  <block wx:for="{{pics}}">
+    <view class="al-image-field-img-warp">
+      <image src="{{item.url}}" class="al-image-field-img"></image>
+    </view>
+  </block>
+  <block wx:if="{{showPlus}}">
+    <view class="al-image-field-img-warp">
+      <image src="/image/icon_plus.png" class="al-image-field-img" catchtap="handleAdd"></image>
+    </view>
+  </block>
 </view>

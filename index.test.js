@@ -4,10 +4,10 @@
  * @author Liang <liang@maichong.it>
  */
 
-export async function handleAdd(com, run) {
-  let count = com.data.pics.length;
-  await run();
-  if (com.data.pics.length - count !== 1) {
-    throw new Error('点击增加照片后没有正常增加一张照片');
-  }
-}
+// export async function handleAdd(com, run) {
+//   let count = com.data.pics.length;
+//   await run();
+//   if (com.data.pics.length - count !== 1) {
+//     throw new Error('点击增加照片后没有正常增加一张照片');
+//   }
+// }
