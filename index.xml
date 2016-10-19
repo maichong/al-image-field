@@ -1,12 +1,12 @@
-<view class="al-image-field">
+<view class="al-image-field flex flex-wrap">
   <block wx:for="{{pics}}">
-    <view class="al-image-field-img-warp">
-      <image src="{{item.url}}" class="al-image-field-img"></image>
+    <view class="al-image-field-img-warp" style="{{style}}">
+      <image src="{{item.url}}" class="al-image-field-img"/>
     </view>
   </block>
-  <block wx:if="{{showPlus}}">
-    <view class="al-image-field-img-warp">
-      <image src="/image/icon_plus.png" class="al-image-field-img" catchtap="handleAdd"></image>
+  <block wx:if="{{pics.length < count}}">
+    <view class="al-image-field-img-warp" style="{{style}}">
+      <image src="/image/icon_plus.png" class="al-image-field-img" catchtap="handleAdd"/>
     </view>
   </block>
 </view>
