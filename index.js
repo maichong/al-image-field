@@ -5,6 +5,7 @@
  */
 
 import wx from 'labrador';
+import _clone from 'lodash/clone';
 
 const { array, func, number } = wx.PropTypes;
 
@@ -34,7 +35,6 @@ export default class ImageField extends wx.Component {
 
   data = {
     pics: [],
-    count: 9,
     preLine: 3,
     showPlus: true,
     width: 0,
@@ -80,37 +80,24 @@ export default class ImageField extends wx.Component {
 
   //新加照片
   async handleAdd() {
-    let me = this;
-    wx.chooseImage({
-      count: me.data.count, // 默认9
-      sizeType: ['original', 'compressed'],
-      sourceType: ['album', 'camera'],
-      success: function (res) {
-        console.log('调用成功----', res);
-        // let tempFilePaths = (res.tempFilePaths)[0];
-        // let item = {};
-        // item.type = 'temp';
-        // item.url = 'tempFilePaths';
-        // this.data.pics.push(item);
-        // console.log('this.data.pics====', this.data.pics);
-        // if (this.props.onChange) {
-        //   this.props.onChange(this.data.pics);
-        // }
-      },
-      fail: function (res) {
-        console.log('错误数据----', res);
-      },
-      complete: function (res) {
-        // console.log('接口调用结束----', res);
-        let tempFilePaths = (res.tempFilePaths)[0];
-        let item = {};
-        item.type = 'temp';
-        item.url = tempFilePaths;
-        (me.data.pics).push(item);
-        if (me.props.onChange) {
-          me.props.onChange(me.data.pics);
-        }
-      }
-    });
+    try {
+      let res = await wx.chooseImage({
+        count: this.props.count - this.data.pics.length,
+        sizeType: ['original', 'compressed'],
+        sourceType: ['album', 'camera']
+      });
+
+      console.log('接口调用结束----', res);
+      let pics = _clone(this.data.pics);
+      res.tempFilePaths.forEach((url) => {
+        pics.push({
+          type: 'temp',
+          url
+        });
+      });
+      this.props.onChange(pics);
+    } catch (error) {
+      console.error(error.stack);
+    }
   }
 }
